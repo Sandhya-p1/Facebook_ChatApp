@@ -1,12 +1,13 @@
 import React from "react";
 import StoryTemplate from "./storyTemplate";
 import { Image, Images, Sticker, Video } from "lucide-react";
+import PostTemplate from "./postTemplate";
 
 const FeedMiddleSection = () => {
   return (
-    <div className="flex flex-col gap-2 px-6 py-4 w-[90%] md:w-[60%]">
-      <nav className="p-2 rounded-md bg-neutral-800 ">
-        <form className="flex items-center space-x-3 shrink-0 ">
+    <div className="flex flex-col gap-2 ">
+      <nav className="p-2 rounded-md bg-neutral-800 w-full ">
+        <form className="flex items-center space-x-3  ">
           <img
             src=""
             className="w-8 h-8 md:h-10 md:w-10 rounded-full bg-blue-950 shrink-0"
@@ -16,12 +17,13 @@ const FeedMiddleSection = () => {
             type="text"
             placeholder="What's on your mind, Sandhya?"
           />
-          <Video className="shrink-0 size-6 text-red-800" />
-          <Images className="shrink-0 size-6 text-green-700" />
-          <Sticker className="shrink-0 size-6 text-orange-400" />
+          <Video className="shrink-0 md:size-6 text-red-800" />
+          <Images className="shrink-0 md:size-6 text-green-700" />
+          <Sticker className="shrink-0 md:size-6 text-orange-400" />
         </form>
       </nav>
 
+      {/* story section  */}
       <div className="flex scroll-smooth no-scrollbar  space-x-2 overflow-scroll">
         <StoryTemplate />
         <StoryTemplate />
@@ -31,6 +33,12 @@ const FeedMiddleSection = () => {
         <StoryTemplate />
         <StoryTemplate />
         <StoryTemplate />
+      </div>
+
+      {/* post section */}
+      <div className="flex flex-col gap-2">
+        <PostTemplate />
+        <PostTemplate />
       </div>
     </div>
   );

@@ -8,6 +8,11 @@
     scrollbar-width: none;
   }
 }
+/* Add this in your global CSS (index.css) */
+.smooth-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
 
 body {
   margin: 0;
