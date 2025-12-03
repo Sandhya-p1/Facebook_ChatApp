@@ -10,7 +10,7 @@ import {
 
 const PostTemplate = () => {
   return (
-    <div className="bg-neutral-800 h-full  w-full rounded-md  flex flex-col">
+    <div className="bg-neutral-800 h-full  w-full md:rounded-md   flex flex-col">
       <nav className="flex p-2 justify-between items-center">
         <div className="flex items-start space-x-2.5">
           <img src="" className="h-10 w-10 rounded-full" />
@@ -39,7 +39,7 @@ const PostTemplate = () => {
       {/* images goes here */}
       <img
         src=""
-        className="h-72 sm:h-80 md:h-[450px] lg:h-[550px] border-2 w-full object-cover"
+        className="h-72 sm:h-80 md:h-[450px] lg:h-[550px]  w-full object-cover"
       />
 
       {/* footer */}
