@@ -5,14 +5,19 @@ import RightSidebar from "../components/sidebarRight";
 
 const Feed = () => {
   return (
-    <div className="flex justify-evenly h-screen overflow-hidden bg-black relative">
-      <div className="fixed h-screen top-0 left-0">
+    <div className="flex h-screen bg-black overflow-hidden">
+      {/* Left Sidebar */}
+      <div className="hidden md:flex flex-col w-60 h-full bg-neutral-900">
         <LeftSidebar />
       </div>
-      <div className="flex-1 px-10 md:ml-62 lg:px-40 py-6 h-screen smooth-scroll overflow-y-auto no-scrollbar">
+
+      {/* Middle Section */}
+      <div className="flex-1 overflow-y-auto px-4 py-6 no-scrollbar smooth-scroll">
         <FeedMiddleSection />
       </div>
-      <div className="w-[20%] hidden md:block overflow-scroll smooth-scroll no-scrollbar">
+
+      {/* Right Sidebar */}
+      <div className="hidden lg:flex flex-col w-1/5 h-full bg-neutral-900 overflow-y-auto no-scrollbar smooth-scroll">
         <RightSidebar />
       </div>
     </div>
