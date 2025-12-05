@@ -8,7 +8,7 @@ import PostTemplate from "../components/postTemplate";
 export const Profile = () => {
   const navigate = useNavigate();
   return (
-    <div className="flex flex-col bg-black  mx-auto w-full gap-3  ">
+    <div className="flex flex-col bg-neutral-950  mx-auto w-full gap-3  ">
       <ProfileHeader />
 
       <ProfileMiddleSection />

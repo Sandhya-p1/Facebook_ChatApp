@@ -15,7 +15,7 @@ import {
 
 const LeftSidebar = () => {
   return (
-    <div className="flex-col border-r gap-8 hidden md:flex  md:w-64  border-r-gray-500 min-h-screen p-4">
+    <div className="flex-col  gap-8 hidden md:flex  md:w-64   min-h-screen p-4">
       <div className="text-start mt-2">
         <p className="hidden md:block text-2xl font-semibold  text-blue-500 italic">
           𝒻𝒶𝒸𝑒𝒷𝑜𝑜𝓀

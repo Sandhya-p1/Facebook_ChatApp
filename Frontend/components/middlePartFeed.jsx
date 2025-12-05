@@ -5,7 +5,7 @@ import PostTemplate from "./postTemplate";
 
 const FeedMiddleSection = () => {
   return (
-    <div className="flex flex-col gap-2  ">
+    <div className="flex flex-col gap-2 lg:mx-auto lg:w-[640px]   ">
       <nav className="p-2 rounded-md bg-neutral-800 w-full ">
         <form className="flex items-center space-x-3  ">
           <img
