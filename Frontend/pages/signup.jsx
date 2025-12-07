@@ -2,6 +2,9 @@ import { useState } from "react";
 import SigningUp from "../components/signingBg";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../src/zustandStore/useAuthStore";
+import { useMutation } from "@tanstack/react-query";
+import { signup } from "../src/api/authApi";
+import toast from "react-hot-toast";
 const SignUp = () => {
   const [form, setForm] = useState({
     fullName: "",
@@ -9,25 +12,45 @@ const SignUp = () => {
     password: "",
   });
   const navigate = useNavigate();
-  const { signup, isSigningUp } = useAuthStore();
 
-  const validateForm = () => {
-    if (!form.fullName.trim()) return toast.error("Full name is required");
-    if (!form.userName.trim()) return toast.error("User name is required");
-    if (!form.password) return toast.error("Password is required");
-
-    return true;
-  };
+  const signupMutation = useMutation({
+    mutationFn: signup,
+    onSuccess: (data) => {
+      toast.success("Signed Up successfully");
+      localStorage.setItem("user", JSON.stringify(data));
+      navigate("/");
+    },
+    onError: (error) => {
+      toast.error(error?.response?.data?.message || "signup failed");
+    },
+  });
 
   const handleSignup = (e) => {
     e.preventDefault();
-    console.log({ form });
-    const success = validateForm();
-    if (success === true) signup(form);
-    setForm({ fullName: "", userName: "", password: "" });
+    if (!form.fullName.trim() || !form.userName.trim() || !form.password.trim())
+      return toast.error("Please fill all the fields");
+    signupMutation.mutate(form);
   };
 
-  if (isSigningUp) return <p>Loading....</p>;
+  // const { signup, isSigningUp } = useAuthStore();
+
+  // const validateForm = () => {
+  //   if (!form.fullName.trim()) return toast.error("Full name is required");
+  //   if (!form.userName.trim()) return toast.error("User name is required");
+  //   if (!form.password) return toast.error("Password is required");
+
+  //   return true;
+  // };
+
+  // const handleSignup = (e) => {
+  //   e.preventDefault();
+  //   console.log({ form });
+  //   const success = validateForm();
+  //   if (success === true) signup(form);
+  //   setForm({ fullName: "", userName: "", password: "" });
+  // };
+
+  // if (isSigningUp) return <p>Loading....</p>;
 
   return (
     <div className="flex flex-col md:flex-row justify-center md:justify-between md:gap-x-20 gap-y-20 items-center md:w-[60%] w-[80%] mx-auto min-h-screen">
@@ -63,9 +86,10 @@ const SignUp = () => {
         />
         <button
           type="submit"
+          disabled={signupMutation.isLoading}
           className=" border-gray-400 border hover:bg-[#4880e0]  cursor-pointer px-3 py-3 "
         >
-          SignUp
+          {signupMutation.isLoading ? "Signing Up...." : "SignUp"}
         </button>
         <p
           onClick={() => navigate("/")}

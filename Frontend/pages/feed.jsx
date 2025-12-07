@@ -2,10 +2,12 @@ import React from "react";
 import LeftSidebar from "../components/sidebarLeft";
 import FeedMiddleSection from "../components/middlePartFeed";
 import RightSidebar from "../components/sidebarRight";
+import { useChatStore } from "../src/zustandStore/useChatStore";
+import ChatBox from "../components/chatBox";
 
 const Feed = () => {
   return (
-    <div className="flex h-screen bg-black overflow-hidden">
+    <div className="flex h-screen bg-black overflow-hidden relative">
       {/* Left Sidebar */}
       <div className="hidden md:flex border-r border-r-neutral-800  flex-col w-60 h-full ">
         <LeftSidebar />
@@ -19,6 +21,10 @@ const Feed = () => {
       {/* Right Sidebar */}
       <div className="hidden lg:flex flex-col w-1/5 h-full  overflow-y-auto no-scrollbar smooth-scroll">
         <RightSidebar />
+      </div>
+
+      <div className="absolute bottom-0 right-4">
+        <ChatBox />
       </div>
     </div>
   );

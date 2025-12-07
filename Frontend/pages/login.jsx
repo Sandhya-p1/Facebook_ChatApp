@@ -1,8 +1,11 @@
 import { useState } from "react";
 import SigningUp from "../components/signingBg";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../src/zustandStore/useAuthStore";
-import { Loader } from "lucide-react";
+// import { useAuthStore } from "../src/zustandStore/useAuthStore";
+// import { Loader } from "lucide-react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { login } from "../src/api/authApi";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [form, setForm] = useState({
@@ -10,23 +13,44 @@ const Login = () => {
     password: "",
   });
   const navigate = useNavigate();
+  const queryClient = useQueryClient(); // React Query client
 
-  const { login, isLoggingIn } = useAuthStore();
+  const loginMutation = useMutation({
+    mutationFn: login,
+    onSuccess: (data) => {
+      localStorage.setItem("authUser", JSON.stringify(data));
+      queryClient.setQueryData(["authUser"], data);
+      toast.success("Logged in successfully");
+      navigate("/");
+    },
+    onError: (error) => {
+      toast.error(error?.response?.data?.message || "Login failed");
+    },
+  });
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log({ form });
-    login({ form });
-    setForm({ userName: "", password: "" });
+    if (!form.userName || !form.password)
+      return toast.error("Please fill all the fields");
+    loginMutation.mutate(form);
   };
 
-  if (isLoggingIn) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <Loader className="size-10 animate-spin" />
-      </div>
-    );
-  }
+  // const { login, isLoggingIn } = useAuthStore();
+
+  // const handleLogin = (e) => {
+  //   e.preventDefault();
+  //   console.log({ form });
+  //   login(form);
+  //   setForm({ userName: "", password: "" });
+  // };
+
+  // if (isLoggingIn) {
+  //   return (
+  //     <div className="flex items-center justify-center h-screen">
+  //       <Loader className="size-10 animate-spin" />
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="flex flex-col md:flex-row justify-center md:justify-between md:gap-x-20 gap-y-20 items-center md:w-[60%] w-[80%] mx-auto min-h-screen">
@@ -54,9 +78,10 @@ const Login = () => {
         />
         <button
           type="submit"
+          disabled={loginMutation.isLoading}
           className=" border-gray-400 border hover:bg-[#4880e0]  cursor-pointer px-3 py-3 "
         >
-          LogIn
+          {loginMutation.isLoading ? "Logging in..." : "LogIn "}
         </button>
         <p
           onClick={() => navigate("/signup")}

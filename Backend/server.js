@@ -4,10 +4,12 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import { app, server } from "./socket.js";
 import connectToMongoDB from "./db/connectToMongoDB.js";
+import authRoutes from "./routes/authRoutes.js";
+import messageRoutes from "./routes/messageRoutes.js";
+import postRoutes from "./routes/postRoutes.js";
 
 dotenv.config();
 const PORT = process.env.PORT || 8000;
-const app = express();
 
 app.use(
   cors({
@@ -21,6 +23,7 @@ app.use(cookieParser());
 // routes
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
+app.use("/api/posts", postRoutes);
 
 server.listen(PORT, () => {
   connectToMongoDB();

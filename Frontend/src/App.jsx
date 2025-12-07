@@ -1,4 +1,3 @@
-import Create from "../pages/createpost";
 import Feed from "../pages/feed";
 import Login from "../pages/login";
 import { Profile } from "../pages/profile";
@@ -8,27 +7,36 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuthStore } from "./zustandStore/useAuthStore";
 import { useEffect } from "react";
 import { Loader } from "lucide-react";
+import useAuthUser from "./api/authApi";
 
 function App() {
-  const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
+  const { data: authUser, isLoading } = useAuthUser();
 
-  useEffect(() => {
-    checkAuth();
-  }, []);
-
-  if (isCheckingAuth && !authUser) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
         <Loader className="size-10 animate-spin" />
       </div>
     );
   }
+  // const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
+
+  // useEffect(() => {
+  //   checkAuth();
+  // }, []);
+
+  // if (isCheckingAuth && !authUser)
+  //    {
+  //   return (
+  //     <div className="flex items-center justify-center h-screen">
+  //       <Loader className="size-10 animate-spin" />
+  //     </div>
+  //   );
+  // }
 
   return (
     <div>
       <Routes>
-        <Route path="/createpost" element={<Create />} />
-
         <Route
           path="/"
           element={authUser ? <Feed /> : <Navigate to="/login" />}

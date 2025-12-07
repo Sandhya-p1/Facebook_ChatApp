@@ -4,6 +4,7 @@ import {
   Camera,
   Heart,
   Home,
+  LogOut,
   MessageCircleDashed,
   MessageCircleMore,
   Plus,
@@ -12,10 +13,12 @@ import {
   User,
   Users,
 } from "lucide-react";
+import { useAuthStore } from "../src/zustandStore/useAuthStore";
 
 const LeftSidebar = () => {
+  const { logout, authUser } = useAuthStore();
   return (
-    <div className="flex-col  gap-8 hidden md:flex  md:w-64   min-h-screen p-4">
+    <div className="flex-col  gap-8 hidden md:flex  md:w-64 relative  min-h-screen p-4">
       <div className="text-start mt-2">
         <p className="hidden md:block text-2xl font-semibold  text-blue-500 italic">
           𝒻𝒶𝒸𝑒𝒷𝑜𝑜𝓀
@@ -66,6 +69,17 @@ const LeftSidebar = () => {
             Profile
           </p>
         </div>{" "}
+        {authUser && (
+          <div className="absolute bottom-4  flex items-center cursor-pointer hover:text-red-900  rounded-sm p-2 gap-3 font-semibold     transition-all duration-300 ease-in-out ">
+            <LogOut size={20} />
+            <p
+              onClick={logout}
+              className="hidden md:block   hover:scale-105 cursor-pointer"
+            >
+              Logout
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

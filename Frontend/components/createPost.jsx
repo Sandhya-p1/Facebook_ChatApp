@@ -1,19 +1,58 @@
 import { Image, X } from "lucide-react";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
+// import { usePostStore } from "../src/zustandStore/usePostStore";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createPost } from "../src/api/postApi";
 
-const CreatePost = () => {
-  const [showCreatePost, setShowCreatePost] = useState(true);
+const CreatePost = ({ close }) => {
+  const [caption, setCaption] = useState("");
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: createPost,
+    onSuccess: (newPost) => {
+      queryClient.setQueryData(["posts"], (prevPosts = []) => [
+        newPost,
+        ...prevPosts,
+      ]);
+      toast.success("Posted");
+      setCaption("");
+      close();
+    },
+    onError: (error) => {
+      toast.error(error?.response?.data?.message || "Failed to post");
+    },
+  });
+
+  const handlePost = (e) => {
+    e.preventDefault();
+    if (!caption.trim()) return toast.error("Please enter something to post");
+    mutation.mutate(caption);
+  };
+
+  // const { addPost } = usePostStore();
+  // const handlePost = async (e) => {
+  //   e.preventDefault();
+  //   if (!caption.trim()) {
+  //     toast.error("Please enter something to post");
+  //     return;
+  //   }
+  //   await addPost({ caption });
+  //   toast.success("Posted");
+  //   setCaption("");
+  //   close();
+  // };
 
   return (
-    <div className="flex flex-col relative gap-2 rounded-xl bg-neutral-700 z-50 h-[500px] w-[450px]">
+    <form
+      onSubmit={handlePost}
+      className="flex flex-col relative gap-2 rounded-xl bg-neutral-700 z-50 h-[500px] w-[450px]"
+    >
       <div className="flex justify-between p-4">
         <p></p>
         <p className="text-xl font-semibold">Create Post</p>
-        <X
-          size={26}
-          className="cursor-pointer"
-          onClick={() => setShowCreatePost(!showCreatePost)}
-        />
+        <X size={26} className="cursor-pointer" onClick={close} />
       </div>
       <hr className="text-gray-500" />
 
@@ -25,6 +64,8 @@ const CreatePost = () => {
         </div>
         <input
           type="text"
+          value={caption}
+          onChange={(e) => setCaption(e.target.value)}
           placeholder="What's on your mind,Sandhya?"
           className="flex-1 w-full border-none outline-none"
         />
@@ -38,11 +79,14 @@ const CreatePost = () => {
           <Image className="text-green-600" />
         </label>
 
-        <button className="w-full rounded-2xl font-semibold transition-all duration-200 ease-linear hover:bg-blue-500 bg-neutral-600 p-3 cursor-pointer">
+        <button
+          type="submit"
+          className="w-full rounded-2xl font-semibold transition-all duration-200 ease-linear hover:bg-blue-500 bg-neutral-600 p-3 cursor-pointer"
+        >
           Post
         </button>
       </div>
-    </div>
+    </form>
   );
 };
 
