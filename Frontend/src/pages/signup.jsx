@@ -1,10 +1,10 @@
 import { useState } from "react";
 import SigningUp from "../components/signingBg";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../src/zustandStore/useAuthStore";
-import { useMutation } from "@tanstack/react-query";
-import { signup } from "../src/api/authApi";
+// import { useAuthStore } from "../src/zustandStore/useAuthStore";
 import toast from "react-hot-toast";
+import { useSignUp } from "../hooks/useSignup";
+
 const SignUp = () => {
   const [form, setForm] = useState({
     fullName: "",
@@ -13,23 +13,12 @@ const SignUp = () => {
   });
   const navigate = useNavigate();
 
-  const signupMutation = useMutation({
-    mutationFn: signup,
-    onSuccess: (data) => {
-      toast.success("Signed Up successfully");
-      localStorage.setItem("user", JSON.stringify(data));
-      navigate("/");
-    },
-    onError: (error) => {
-      toast.error(error?.response?.data?.message || "signup failed");
-    },
-  });
-
+  const signup = useSignUp();
   const handleSignup = (e) => {
     e.preventDefault();
     if (!form.fullName.trim() || !form.userName.trim() || !form.password.trim())
       return toast.error("Please fill all the fields");
-    signupMutation.mutate(form);
+    signup.mutate(form);
   };
 
   // const { signup, isSigningUp } = useAuthStore();
@@ -89,7 +78,7 @@ const SignUp = () => {
           disabled={signupMutation.isLoading}
           className=" border-gray-400 border hover:bg-[#4880e0]  cursor-pointer px-3 py-3 "
         >
-          {signupMutation.isLoading ? "Signing Up...." : "SignUp"}
+          {signup.isPending ? "Signing Up...." : "SignUp"}
         </button>
         <p
           onClick={() => navigate("/")}

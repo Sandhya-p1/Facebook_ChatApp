@@ -1,19 +1,5 @@
 import Message from "../models/messageModelSchema.js";
-import User from "../models/userModelSchema.js";
 import { getReceiverSocketId, io } from "../socket.js";
-
-export const usersForSidebar = async (req, res) => {
-  try {
-    const loggedInUser = req.user._id;
-    const filteredUsers = await User.find({
-      _id: { $ne: loggedInUser },
-    }).select("-password");
-    res.status(200).json(filteredUsers);
-  } catch (error) {
-    console.error("Error in get users for sidebar:", error.message);
-    res.status(500).json({ error: "Internal server error" });
-  }
-};
 
 export const getMessage = async (req, res) => {
   try {

@@ -6,8 +6,6 @@ import {
   Film,
   List,
   Locate,
-  Pencil,
-  Plus,
   School,
   Video,
 } from "lucide-react";

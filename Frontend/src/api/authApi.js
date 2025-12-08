@@ -1,22 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "../lib/axios";
 
 export const getAuthUser = async () => {
   const res = await axiosInstance.get("/auth/checkAuth");
   return res.data;
 };
-
-const useAuthUser = () => {
-  return useQuery({
-    queryKey: ["authUser"],
-    queryFn: getAuthUser,
-    initialData: () => {
-      const user = localStorage.getItem("authUser");
-      return user ? JSON.parse(user) : null;
-    },
-  });
-};
-export default useAuthUser;
 
 export const signup = async (data) => {
   const res = await axiosInstance.post("/auth/signup", data);
@@ -25,6 +12,7 @@ export const signup = async (data) => {
 
 export const login = async (data) => {
   const res = await axiosInstance.post("/auth/login", data);
+  console.log("Login response:", res.data);
   return res.data;
 };
 

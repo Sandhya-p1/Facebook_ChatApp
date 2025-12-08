@@ -1,22 +1,24 @@
-import React from "react";
 import {
-  Bell,
-  Camera,
   Heart,
   Home,
   LogOut,
-  MessageCircleDashed,
-  MessageCircleMore,
   Plus,
   Search,
   Send,
   User,
   Users,
 } from "lucide-react";
-import { useAuthStore } from "../src/zustandStore/useAuthStore";
+
+import { useLogOut } from "../hooks/useLogout";
+import { useAuthUser } from "../hooks/useAuthUser";
+// import { useAuthStore } from "../src/zustandStore/useAuthStore";
 
 const LeftSidebar = () => {
-  const { logout, authUser } = useAuthStore();
+  const authUser = useAuthUser();
+  const logout = useLogOut();
+
+  // const { logout, authUser } = useAuthStore();
+
   return (
     <div className="flex-col  gap-8 hidden md:flex  md:w-64 relative  min-h-screen p-4">
       <div className="text-start mt-2">
@@ -73,7 +75,7 @@ const LeftSidebar = () => {
           <div className="absolute bottom-4  flex items-center cursor-pointer hover:text-red-900  rounded-sm p-2 gap-3 font-semibold     transition-all duration-300 ease-in-out ">
             <LogOut size={20} />
             <p
-              onClick={logout}
+              onClick={() => logout.mutate()}
               className="hidden md:block   hover:scale-105 cursor-pointer"
             >
               Logout

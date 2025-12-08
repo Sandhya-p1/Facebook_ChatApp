@@ -1,9 +1,10 @@
 import React from "react";
+
+// import { useChatStore } from "../src/zustandStore/useChatStore";
+import ChatBox from "../components/chatBox";
 import LeftSidebar from "../components/sidebarLeft";
 import FeedMiddleSection from "../components/middlePartFeed";
 import RightSidebar from "../components/sidebarRight";
-import { useChatStore } from "../src/zustandStore/useChatStore";
-import ChatBox from "../components/chatBox";
 
 const Feed = () => {
   return (

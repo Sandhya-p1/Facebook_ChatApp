@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 // import { usePostStore } from "../src/zustandStore/usePostStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createPost } from "../src/api/postApi";
+import { createPost } from "../api/postApi";
 
 const CreatePost = ({ close }) => {
   const [caption, setCaption] = useState("");

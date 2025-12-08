@@ -1,11 +1,8 @@
 import { useState } from "react";
 import SigningUp from "../components/signingBg";
-import { useNavigate } from "react-router-dom";
-// import { useAuthStore } from "../src/zustandStore/useAuthStore";
-// import { Loader } from "lucide-react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { login } from "../src/api/authApi";
 import toast from "react-hot-toast";
+import { useLogin } from "../hooks/useLogin";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [form, setForm] = useState({
@@ -13,26 +10,14 @@ const Login = () => {
     password: "",
   });
   const navigate = useNavigate();
-  const queryClient = useQueryClient(); // React Query client
 
-  const loginMutation = useMutation({
-    mutationFn: login,
-    onSuccess: (data) => {
-      localStorage.setItem("authUser", JSON.stringify(data));
-      queryClient.setQueryData(["authUser"], data);
-      toast.success("Logged in successfully");
-      navigate("/");
-    },
-    onError: (error) => {
-      toast.error(error?.response?.data?.message || "Login failed");
-    },
-  });
+  const login = useLogin();
 
   const handleLogin = (e) => {
     e.preventDefault();
     if (!form.userName || !form.password)
       return toast.error("Please fill all the fields");
-    loginMutation.mutate(form);
+    login.mutate(form);
   };
 
   // const { login, isLoggingIn } = useAuthStore();
@@ -78,10 +63,10 @@ const Login = () => {
         />
         <button
           type="submit"
-          disabled={loginMutation.isLoading}
+          disabled={login.isLoading}
           className=" border-gray-400 border hover:bg-[#4880e0]  cursor-pointer px-3 py-3 "
         >
-          {loginMutation.isLoading ? "Logging in..." : "LogIn "}
+          {login.isPending ? "Loading..." : "LogIn "}
         </button>
         <p
           onClick={() => navigate("/signup")}

@@ -1,15 +1,14 @@
-import User from "../models/userModel.js";
+import User from "../models/userModelSchema.js";
 
 export const getAllUsers = async (req, res) => {
   try {
-    const loggedInUserId = req.user._id;
-    // all users except logged in user
-    const allUsers = await User.find({ _id: { $ne: loggedInUserId } }).select(
-      "-password"
-    );
-    res.status(201).json(allUsers);
+    const loggedInUser = req.user._id;
+    const filteredUsers = await User.find({
+      _id: { $ne: loggedInUser },
+    }).select("-password");
+    res.status(200).json(filteredUsers);
   } catch (error) {
-    console.error("error in get all users:", error);
-    res.status(500).json({ error: "internal server errror" });
+    console.error("Error in get users for sidebar:", error.message);
+    res.status(500).json({ error: "Internal server error" });
   }
 };

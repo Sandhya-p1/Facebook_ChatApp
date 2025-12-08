@@ -4,7 +4,7 @@ import { Image, Images, Sticker, Video } from "lucide-react";
 import PostTemplate from "./postTemplate";
 import { useState } from "react";
 import CreatePost from "./createPost";
-import { usePostStore } from "../src/zustandStore/usePostStore";
+// import { usePostStore } from "../src/zustandStore/usePostStore";
 
 const FeedMiddleSection = () => {
   const [showCreatePost, setShowCreatePost] = useState(false);
