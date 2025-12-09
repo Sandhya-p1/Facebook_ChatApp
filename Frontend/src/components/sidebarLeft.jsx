@@ -11,9 +11,11 @@ import {
 
 import { useLogOut } from "../hooks/useLogout";
 import { useAuthUser } from "../hooks/useAuthUser";
+import { useNavigate } from "react-router-dom";
 // import { useAuthStore } from "../src/zustandStore/useAuthStore";
 
-const LeftSidebar = () => {
+const LeftSidebar = ({ setShowCreatePost }) => {
+  const navigate = useNavigate();
   const authUser = useAuthUser();
   const logout = useLogOut();
 
@@ -31,7 +33,10 @@ const LeftSidebar = () => {
       <div className="flex flex-col items-start gap-6 text-gray-300 ">
         <div className="flex items-center cursor-pointer hover:bg-neutral-800 w-full rounded-sm p-2 gap-3 font-semibold     transition-all duration-300 ease-in-out ">
           <Home size={20} />
-          <p className="hidden md:block text-white  hover:scale-105 cursor-pointer">
+          <p
+            onClick={() => navigate("/")}
+            className="hidden md:block text-white  hover:scale-105 cursor-pointer"
+          >
             Home
           </p>
         </div>
@@ -53,7 +58,10 @@ const LeftSidebar = () => {
             Notifications
           </p>
         </div>
-        <div className="flex items-center cursor-pointer hover:bg-neutral-800 w-full rounded-sm p-2 gap-3 font-semibold     transition-all duration-300 ease-in-out ">
+        <div
+          onClick={() => setShowCreatePost(true)}
+          className="flex items-center cursor-pointer hover:bg-neutral-800 w-full rounded-sm p-2 gap-3 font-semibold     transition-all duration-300 ease-in-out "
+        >
           <Plus size={24} />
           <p className="hidden md:block text-white  hover:scale-105 cursor-pointer">
             Create
@@ -65,7 +73,10 @@ const LeftSidebar = () => {
             Messages
           </p>
         </div>{" "}
-        <div className="flex items-center cursor-pointer hover:bg-neutral-800 w-full rounded-sm p-2 gap-3 font-semibold     transition-all duration-300 ease-in-out ">
+        <div
+          onClick={() => navigate("/profile")}
+          className="flex items-center cursor-pointer hover:bg-neutral-800 w-full rounded-sm p-2 gap-3 font-semibold     transition-all duration-300 ease-in-out "
+        >
           <User size={20} />
           <p className="hidden md:block text-white  hover:scale-105 cursor-pointer">
             Profile

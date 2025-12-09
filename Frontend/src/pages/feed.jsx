@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 // import { useChatStore } from "../src/zustandStore/useChatStore";
 import ChatBox from "../components/chatBox";
@@ -7,16 +7,20 @@ import FeedMiddleSection from "../components/middlePartFeed";
 import RightSidebar from "../components/sidebarRight";
 
 const Feed = () => {
+  const [showCreatePost, setShowCreatePost] = useState(false);
   return (
     <div className="flex h-screen bg-black overflow-hidden relative">
       {/* Left Sidebar */}
       <div className="hidden md:flex border-r border-r-neutral-800  flex-col w-60 h-full ">
-        <LeftSidebar />
+        <LeftSidebar setShowCreatePost={setShowCreatePost} />
       </div>
 
       {/* Middle Section */}
       <div className="flex-1 overflow-y-auto   px-4 py-6 no-scrollbar smooth-scroll">
-        <FeedMiddleSection />
+        <FeedMiddleSection
+          showCreatePost={showCreatePost}
+          setShowCreatePost={setShowCreatePost}
+        />
       </div>
 
       {/* Right Sidebar */}

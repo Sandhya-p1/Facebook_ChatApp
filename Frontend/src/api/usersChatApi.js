@@ -5,6 +5,11 @@ export const getUsers = async () => {
   return res.data;
 };
 
+export const getUserProfile = async () => {
+  const res = await axiosInstance.get(`/users/userProfile/${userId}`);
+  return res.data;
+};
+
 // export const getMessages = async (userId) => {
 //   const res = await axiosInstance.get(`messages/${userId}`);
 //   return res.data;

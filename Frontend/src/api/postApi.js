@@ -9,3 +9,8 @@ export const createPost = async (caption) => {
   const res = await axiosInstance.post("/posts/posting", { caption });
   return res.data.newPost;
 };
+
+export const deletingPost = async (postId) => {
+  const res = await axiosInstance.delete(`/posts/deletePost/${postId}`);
+  return res.data;
+};

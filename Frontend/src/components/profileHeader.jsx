@@ -8,23 +8,27 @@ import {
   Pencil,
   Plus,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const ProfileHeader = () => {
+  const navigate = useNavigate("/");
   return (
     <div className="w-full bg-linear-to-b from-sky-400 via-neutral-800 to-neutral-950 pb-6">
-      <div className="md:w-[50%]  mx-auto  relative">
+      <div className="lg:w-[80%] md:w-full mx-auto  relative">
         <nav className="fixed p-8 text-white flex justify-between items-center z-40 w-full">
           <ChevronLeft
             size={20}
             className="cursor-pointer"
-            onClick={() => navigate("/feed")}
+            onClick={() => navigate("/")}
           />
           <div className="flex justify-between z-50 items-center space-x-10">
             <Pen size={20} />
             <search size={20} />
           </div>
         </nav>
-        <div className="w-full h-[16%] md:h-[500px]  bg-transparent relative">
+
+        {/* cover image */}
+        <div className="w-full h-[16%] md:h-[400px]  bg-transparent relative">
           <img
             src="https://timelinecovers.pro/facebook-cover/download/life-facebook-cover.jpg"
             className="h-full w-full rounded-b-md"

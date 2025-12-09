@@ -1,21 +1,22 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getComments, postComment } from "../api/likesCommentsApi";
 
 export const usePostComments = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: postComment,
-    onSuccess: () => {
-      queryClient.invalidateQueries(["posts"]);
+    mutationFn: ({ postId, text }) => postComment(postId, text),
+    onSuccess: (_, { postId }) => {
+      queryClient.invalidateQueries(["comments", postId]);
     },
   });
 };
 
-export const useGetComments = () => {
+export const useGetComments = (postId) => {
   return useQuery({
-    queryKey: ["posts"],
-    queryFn: getComments,
+    queryKey: ["comments", postId],
+    queryFn: () => getComments(postId),
+    enabled: !!postId,
     retry: false,
   });
 };

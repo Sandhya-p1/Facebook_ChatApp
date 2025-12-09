@@ -1,15 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
 import {
+  Delete,
   Earth,
   Ellipsis,
   LucideShare,
   MessageCircle,
-  Share,
   ThumbsUp,
   X,
 } from "lucide-react";
 import { fetchPosts } from "../api/postApi";
 import Like from "./like";
+import { useDeletePost } from "../hooks/useDeletePost";
+import toast from "react-hot-toast";
+import CommentBox from "./commentBox";
+import PostTemplateFooter from "./postTemplateFooter";
 
 const PostTemplate = () => {
   const {
@@ -20,6 +24,12 @@ const PostTemplate = () => {
     queryKey: ["posts"],
     queryFn: fetchPosts,
   });
+
+  const deleteMutation = useDeletePost();
+
+  const handleDeletePost = (postId) => {
+    deleteMutation.mutate(postId);
+  };
 
   if (isLoading) return <p>Loading posts...</p>;
   if (isError) return <p>Failed to load posts.</p>;
@@ -52,6 +62,7 @@ const PostTemplate = () => {
               <div className="flex space-x-1 items-center">
                 <Ellipsis className="cursor-pointer" />
                 <X className="cursor-pointer" />
+                <Delete onClick={() => handleDeletePost(post._id)} />
               </div>
             </nav>
 
@@ -65,7 +76,13 @@ const PostTemplate = () => {
             />
 
             {/* footer */}
-            <div className="flex justify-evenly items-center w-full text-[16px] p-4">
+            <PostTemplateFooter
+              key={post._id}
+              postId={post._id}
+              isLiked={post.isLiked}
+              totalLikes={post.totalLikes}
+            />
+            {/* <div className="flex justify-evenly items-center w-full text-[16px] p-4">
               <div className="flex items-center space-x-1 cursor-pointer hover:scale-105 px-4 py-1  transition-all duration-300 hover:bg-neutral-700 rounded-md ease-out">
                 <ThumbsUp size={20} />
                 <Like
@@ -75,15 +92,12 @@ const PostTemplate = () => {
                   totalLikes={post.totalLikes}
                 />
               </div>
-              <div className="flex items-center space-x-1 cursor-pointer hover:scale-105 px-4 py-1 transition-all duration-300 hover:bg-neutral-700 rounded-md ease-out">
-                <MessageCircle size={20} />
-                <p>Comment</p>
-              </div>
+              <CommentBox key={post._id} postId={post._id} />
               <div className="flex items-center space-x-1 cursor-pointer hover:scale-105 px-4 py-1 transition-all duration-300 hover:bg-neutral-700 rounded-md ease-out">
                 <LucideShare size={20} />
                 <p>Share</p>
               </div>
-            </div>
+            </div> */}
           </div>
         ))
       ) : (

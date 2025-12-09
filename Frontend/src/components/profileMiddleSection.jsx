@@ -13,7 +13,7 @@ import {
 const ProfileMiddleSection = () => {
   return (
     <>
-      <div className="md:w-[50%] md:mx-auto mx-2 p-4 mb-6 rounded-xl bg-neutral-800">
+      <div className=" lg:w-[80%] md:w-full md:mx-auto mx-2 p-4 mb-6 rounded-xl bg-neutral-800">
         <div className="px-4 grid w-full  text-start  space-y-6">
           <div className=" flex items-center space-x-6 font-[20px]   text-xl">
             <p className="">Posts</p>
@@ -85,11 +85,11 @@ const ProfileMiddleSection = () => {
         </div>
 
         <div className="flex items-center mt-4 py-2 px-4 justify-start space-x-4 bg-neutral-600">
-          <div className="flex items-center space-x-2 font-semibold text-sm  rounded-4xl px-[30px] py-[10px] outline-1">
+          <div className="flex items-center space-x-2 font-semibold text-sm  rounded-4xl px-[30px] py-2.5 outline-1">
             <Film className="text-red-400" size={18} />
             <p> Reel</p>
           </div>
-          <div className=" flex items-center space-x-2 font-semibold text-sm  rounded-4xl px-[30px] py-[10px] outline-1">
+          <div className=" flex items-center space-x-2 font-semibold text-sm  rounded-4xl px-[30px] py-2.5 outline-1">
             <Video className="text-red-600" size={18} />
 
             <p> Live</p>

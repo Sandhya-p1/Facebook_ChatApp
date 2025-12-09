@@ -6,9 +6,7 @@ import { useState } from "react";
 import CreatePost from "./createPost";
 // import { usePostStore } from "../src/zustandStore/usePostStore";
 
-const FeedMiddleSection = () => {
-  const [showCreatePost, setShowCreatePost] = useState(false);
-
+const FeedMiddleSection = ({ showCreatePost, setShowCreatePost }) => {
   return (
     <div className="flex flex-col gap-2 lg:mx-auto lg:w-[640px] ">
       {showCreatePost && (
