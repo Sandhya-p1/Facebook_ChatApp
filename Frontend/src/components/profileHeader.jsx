@@ -9,9 +9,12 @@ import {
   Plus,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAuthUser } from "../hooks/useAuthUser";
 
 const ProfileHeader = () => {
   const navigate = useNavigate("/");
+  const { data: authUser } = useAuthUser();
+  console.log({ authUser });
   return (
     <div className="w-full bg-linear-to-b from-sky-400 via-neutral-800 to-neutral-950 pb-6">
       <div className="lg:w-[80%] md:w-full mx-auto  relative">
@@ -58,7 +61,7 @@ const ProfileHeader = () => {
         {/* user details */}
         <div className="absolute my-24 left-4 text-start grid  space-y-1">
           <h3 className="text-3xl font-semibold flex items-center ">
-            Sandhya {/* {currentUser?.username || "Unknown"} */}
+            San
             <span className="mx-2">
               <ChevronDown size={20} />
             </span>

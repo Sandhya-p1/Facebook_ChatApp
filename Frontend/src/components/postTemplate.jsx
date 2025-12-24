@@ -1,28 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
-import {
-  Delete,
-  Earth,
-  Ellipsis,
-  LucideShare,
-  MessageCircle,
-  ThumbsUp,
-  X,
-} from "lucide-react";
+import { Delete, Earth, Ellipsis, X } from "lucide-react";
 import { fetchPosts } from "../api/postApi";
-import Like from "./like";
 import { useDeletePost } from "../hooks/useDeletePost";
-import toast from "react-hot-toast";
-import CommentBox from "./commentBox";
 import PostTemplateFooter from "./postTemplateFooter";
 
-const PostTemplate = () => {
+const PostTemplate = ({ posts: propPosts }) => {
   const {
-    data: posts,
+    data: fetchedPosts,
     isLoading,
     isError,
   } = useQuery({
     queryKey: ["posts"],
     queryFn: fetchPosts,
+    enabled: !propPosts,
   });
 
   const deleteMutation = useDeletePost();
@@ -30,6 +20,9 @@ const PostTemplate = () => {
   const handleDeletePost = (postId) => {
     deleteMutation.mutate(postId);
   };
+
+  const posts = propPosts || fetchedPosts;
+  if (!posts) return <p>Loading posts...</p>;
 
   if (isLoading) return <p>Loading posts...</p>;
   if (isError) return <p>Failed to load posts.</p>;
@@ -69,11 +62,13 @@ const PostTemplate = () => {
             {/* caption goes here */}
             <p className="p-2">{post.caption}</p>
 
-            {/* images goes here */}
-            <img
-              src=""
-              className="h-72 sm:h-80 md:h-[450px] lg:h-[550px]  w-full object-cover"
-            />
+            {/*post images goes here */}
+            {post.image && (
+              <img
+                src={post.image}
+                className="h-72 sm:h-80 md:h-[450px] lg:h-[550px]  w-full object-cover"
+              />
+            )}
 
             {/* footer */}
             <PostTemplateFooter
@@ -82,22 +77,6 @@ const PostTemplate = () => {
               isLiked={post.isLiked}
               totalLikes={post.totalLikes}
             />
-            {/* <div className="flex justify-evenly items-center w-full text-[16px] p-4">
-              <div className="flex items-center space-x-1 cursor-pointer hover:scale-105 px-4 py-1  transition-all duration-300 hover:bg-neutral-700 rounded-md ease-out">
-                <ThumbsUp size={20} />
-                <Like
-                  key={post._id}
-                  postId={post._id}
-                  isLiked={post.isLiked}
-                  totalLikes={post.totalLikes}
-                />
-              </div>
-              <CommentBox key={post._id} postId={post._id} />
-              <div className="flex items-center space-x-1 cursor-pointer hover:scale-105 px-4 py-1 transition-all duration-300 hover:bg-neutral-700 rounded-md ease-out">
-                <LucideShare size={20} />
-                <p>Share</p>
-              </div>
-            </div> */}
           </div>
         ))
       ) : (

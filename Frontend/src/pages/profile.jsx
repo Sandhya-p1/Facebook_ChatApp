@@ -9,7 +9,6 @@ import RightSidebar from "../components/sidebarRight";
 import ChatBox from "../components/chatBox";
 
 const Profile = () => {
-  const navigate = useNavigate();
   const { id } = useParams();
   const {
     data: userPosts,
@@ -19,17 +18,27 @@ const Profile = () => {
     queryKey: ["userProfile", id],
     queryFn: () => getUserProfile(id),
     enabled: !!id,
+    retry: false,
+    onError: (error) => {
+      console.log("React Query Error:", error.response?.data || error.message);
+    },
   });
+
+  console.log(userPosts);
+  console.log("User ID:", id);
+
   if (isLoading) return <p>Loading profile...</p>;
   if (isError) return <p> Failed to load profile</p>;
+
   return (
     <div className="flex h-screen relative">
       <div className="flex flex-col bg-neutral-950  mx-auto w-full gap-3 overflow-y-auto no-scrollbar  ">
         <ProfileHeader />
 
         <ProfileMiddleSection />
+
         <div className="lg:w-[80%] md:w-full md:mx-auto mx-2 mb-6 flex flex-col gap-4">
-          <PostTemplate />
+          <PostTemplate posts={userPosts} />
         </div>
       </div>
       <RightSidebar />

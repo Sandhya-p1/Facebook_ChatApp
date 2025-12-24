@@ -75,7 +75,7 @@ const SignUp = () => {
         />
         <button
           type="submit"
-          disabled={signupMutation.isLoading}
+          // disabled={signupMutation.isLoading}
           className=" border-gray-400 border hover:bg-[#4880e0]  cursor-pointer px-3 py-3 "
         >
           {signup.isPending ? "Signing Up...." : "SignUp"}

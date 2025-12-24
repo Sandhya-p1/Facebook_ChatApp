@@ -1,12 +1,20 @@
 import Post from "../models/postModelSchema.js";
+// import cloudinary from "../utils/cloudinary.js";
 
 export const posting = async (req, res) => {
-  const { caption } = req.body;
+  const { image, caption } = req.body;
   const userId = req.user._id;
+
+  // let imageUrl;
+  // if (image) {
+  //   const uploadResponse = await cloudinary.uploader.upload(image);
+  //   imageUrl = uploadResponse.secure_url;
+  // }
   try {
     const newPost = new Post({
       caption,
       user: userId,
+      image,
     });
     await newPost.save();
     res.status(200).json({ message: "Post added successfully", newPost });
@@ -23,7 +31,7 @@ export const getPosts = async (req, res) => {
     const postsWithLikeInfo = posts.map((post) => ({
       ...post,
       totalLikes: post.likedBy.length,
-      isLiked: post.likedBy.some((id) => id?.equals(userId)), // ✅ dynamic
+      isLiked: post.likedBy.some((id) => id?.equals(userId)),
     }));
 
     res.json(postsWithLikeInfo);
@@ -36,14 +44,13 @@ export const getPosts = async (req, res) => {
 export const deletePost = async (req, res) => {
   try {
     const postId = req.params.id;
-    const userId = req.user._id; // logged-in user
+    const userId = req.user._id;
 
     const post = await Post.findById(postId);
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
 
-    // check if the post belongs to the authenticated user
     if (!post.user.equals(userId)) {
       return res
         .status(400)

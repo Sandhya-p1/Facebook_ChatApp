@@ -43,7 +43,7 @@ function App() {
           element={!user ? <Login /> : <Navigate to="/" />}
         />
         <Route
-          path="/profile"
+          path="/profile/:id"
           element={user ? <Profile /> : <Navigate to="/login" replace />}
         />
       </Routes>

@@ -1,3 +1,4 @@
+import Post from "../models/postModelSchema.js";
 import User from "../models/userModelSchema.js";
 
 export const getAllUsers = async (req, res) => {
@@ -18,9 +19,10 @@ export const getUserProfile = async (req, res) => {
   try {
     const userPosts = await Post.find({ user: userId }).populate(
       "user",
-      "username"
+      "userName"
     );
-    res.status(200).json({ message: "Fetched user posts ", userPosts });
+    console.log({ userPosts });
+    res.status(200).json(userPosts);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

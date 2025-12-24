@@ -5,8 +5,8 @@ export const fetchPosts = async () => {
   return res.data.reverse();
 };
 
-export const createPost = async (caption) => {
-  const res = await axiosInstance.post("/posts/posting", { caption });
+export const createPost = async ({ caption, image }) => {
+  const res = await axiosInstance.post("/posts/posting", { caption, image });
   return res.data.newPost;
 };
 

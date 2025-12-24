@@ -7,6 +7,7 @@ import { createPost } from "../api/postApi";
 
 const CreatePost = ({ close }) => {
   const [caption, setCaption] = useState("");
+  const [image, setImage] = useState(null);
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -18,6 +19,7 @@ const CreatePost = ({ close }) => {
       ]);
       toast.success("Posted");
       setCaption("");
+      setImage(null);
       close();
     },
     onError: (error) => {
@@ -25,24 +27,38 @@ const CreatePost = ({ close }) => {
     },
   });
 
-  const handlePost = (e) => {
-    e.preventDefault();
-    if (!caption.trim()) return toast.error("Please enter something to post");
-    mutation.mutate(caption);
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please select an image file");
+      return;
+    }
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "facebook_posts");
+
+    try {
+      const res = await fetch(
+        "http://api.cloudinary.com/v1_1/dm5qalis2/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const data = await res.json();
+      setImage(data.secure_url);
+    } catch (error) {
+      toast.error("Image upload failed");
+    }
   };
 
-  // const { addPost } = usePostStore();
-  // const handlePost = async (e) => {
-  //   e.preventDefault();
-  //   if (!caption.trim()) {
-  //     toast.error("Please enter something to post");
-  //     return;
-  //   }
-  //   await addPost({ caption });
-  //   toast.success("Posted");
-  //   setCaption("");
-  //   close();
-  // };
+  const handlePost = (e) => {
+    e.preventDefault();
+    if (!caption.trim() && !image)
+      return toast.error("Please enter something or select image to post");
+    mutation.mutate({ caption, image });
+  };
 
   return (
     <form
@@ -69,13 +85,14 @@ const CreatePost = ({ close }) => {
           placeholder="What's on your mind,Sandhya?"
           className="flex-1 w-full border-none outline-none"
         />
+        {image && <img src={image} className="w-full h-40 object-cover" />}
       </div>
 
       {/* footer */}
       <div className="absolute bottom-2 flex flex-col w-full p-4 gap-4">
         <label className="cursor-pointer flex justify-between items-center w-full border border-gray-500 rounded-2xl p-3">
           <p className="text-sm font-semibold">Add to your post</p>
-          <input type="file" className="hidden" />
+          <input type="file" className="hidden" onChange={handleImageChange} />
           <Image className="text-green-600" />
         </label>
 

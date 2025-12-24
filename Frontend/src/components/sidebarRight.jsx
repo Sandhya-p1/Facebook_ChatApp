@@ -15,7 +15,7 @@ const RightSidebar = () => {
     queryFn: getUsers,
   });
   const { data: authUser } = useAuthUser();
-  console.log({ authUser });
+
   const { selectedUser, setSelectedUser } = useChatStore();
 
   if (isLoading) return <p>Loading posts...</p>;

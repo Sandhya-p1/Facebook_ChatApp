@@ -16,7 +16,8 @@ import { useNavigate } from "react-router-dom";
 
 const LeftSidebar = ({ setShowCreatePost }) => {
   const navigate = useNavigate();
-  const authUser = useAuthUser();
+  const { data: authUser } = useAuthUser();
+  // console.log({ authUser });
   const logout = useLogOut();
 
   // const { logout, authUser } = useAuthStore();
@@ -74,7 +75,7 @@ const LeftSidebar = ({ setShowCreatePost }) => {
           </p>
         </div>{" "}
         <div
-          onClick={() => navigate("/profile")}
+          onClick={() => navigate(`/profile/${authUser?._id}`)}
           className="flex items-center cursor-pointer hover:bg-neutral-800 w-full rounded-sm p-2 gap-3 font-semibold     transition-all duration-300 ease-in-out "
         >
           <User size={20} />

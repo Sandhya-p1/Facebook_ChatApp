@@ -62,7 +62,7 @@ const FeedMiddleSection = ({ showCreatePost, setShowCreatePost }) => {
         </div>
 
         {/* post section */}
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-6">
           <PostTemplate />
         </div>
       </div>
