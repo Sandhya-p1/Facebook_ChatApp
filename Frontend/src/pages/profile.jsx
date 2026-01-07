@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ProfileHeader from "../components/profileHeader";
 import ProfileMiddleSection from "../components/profileMiddleSection";
 import PostTemplate from "../components/postTemplate";
@@ -10,6 +10,7 @@ import ChatBox from "../components/chatBox";
 
 const Profile = () => {
   const { id } = useParams();
+
   const {
     data: userPosts,
     isLoading,
@@ -24,28 +25,37 @@ const Profile = () => {
     },
   });
 
-  console.log(userPosts);
-  console.log("User ID:", id);
-
-  if (isLoading) return <p>Loading profile...</p>;
-  if (isError) return <p> Failed to load profile</p>;
+  if (isLoading) return <p className="text-center mt-10">Loading profile...</p>;
+  if (isError)
+    return <p className="text-center mt-10">Failed to load profile</p>;
 
   return (
-    <div className="flex h-screen relative">
-      <div className="flex flex-col bg-neutral-950  mx-auto w-full gap-3 overflow-y-auto no-scrollbar  ">
-        <ProfileHeader />
+    <div className="flex min-h-screen bg-neutral-950">
+      {/* Main content */}
+      <div className="flex-1 flex justify-center">
+        <div className="w-full max-w-[680px] xl:max-w-[1000px] flex flex-col gap-4 overflow-y-auto no-scrollbar">
+          <ProfileHeader />
+          <ProfileMiddleSection />
 
-        <ProfileMiddleSection />
-
-        <div className="lg:w-[80%] md:w-full md:mx-auto mx-2 mb-6 flex flex-col gap-4">
-          <PostTemplate posts={userPosts} />
+          <div className="px-3 mb-10 flex flex-col gap-4">
+            <PostTemplate posts={userPosts} />
+          </div>
         </div>
       </div>
-      <RightSidebar />
-      <div className="absolute bottom-0 right-4">
+
+      {/* Right Sidebar */}
+      <div className="hidden xl:flex xl:flex-col xl:w-[340px] shrink-0">
+        <div className="sticky top-0 h-screen bg-neutral-900 border-l border-neutral-800 overflow-y-auto p-6">
+          <RightSidebar />
+        </div>
+      </div>
+
+      {/* Chat */}
+      <div className="fixed bottom-4 right-4 z-50">
         <ChatBox />
       </div>
     </div>
   );
 };
+
 export default Profile;

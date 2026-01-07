@@ -20,23 +20,6 @@ const Login = () => {
     login.mutate(form);
   };
 
-  // const { login, isLoggingIn } = useAuthStore();
-
-  // const handleLogin = (e) => {
-  //   e.preventDefault();
-  //   console.log({ form });
-  //   login(form);
-  //   setForm({ userName: "", password: "" });
-  // };
-
-  // if (isLoggingIn) {
-  //   return (
-  //     <div className="flex items-center justify-center h-screen">
-  //       <Loader className="size-10 animate-spin" />
-  //     </div>
-  //   );
-  // }
-
   return (
     <div className="flex flex-col md:flex-row justify-center md:justify-between md:gap-x-20 gap-y-20 items-center md:w-[60%] w-[80%] mx-auto min-h-screen">
       <SigningUp />

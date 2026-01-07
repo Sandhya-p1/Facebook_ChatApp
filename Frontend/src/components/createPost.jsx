@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 // import { usePostStore } from "../src/zustandStore/usePostStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createPost } from "../api/postApi";
+import { useAuthUser } from "../hooks/useAuthUser";
 
 const CreatePost = ({ close }) => {
   const [caption, setCaption] = useState("");
@@ -60,6 +61,8 @@ const CreatePost = ({ close }) => {
     mutation.mutate({ caption, image });
   };
 
+  const { data: authUser } = useAuthUser();
+
   return (
     <form
       onSubmit={handlePost}
@@ -76,13 +79,15 @@ const CreatePost = ({ close }) => {
       <div className="flex flex-col gap-3 p-4">
         <div className="flex items-center space-x-2">
           <img src="" className="h-10 w-10 rounded-full bg-white" />
-          <p className="text-lg font-semibold">Sandhya Pandey</p>
+          <p className="text-lg font-semibold uppercase">
+            {authUser?.fullName}
+          </p>
         </div>
         <input
           type="text"
           value={caption}
           onChange={(e) => setCaption(e.target.value)}
-          placeholder="What's on your mind,Sandhya?"
+          placeholder={`What's on your mind, ${authUser?.fullName}?`}
           className="flex-1 w-full border-none outline-none"
         />
         {image && <img src={image} className="w-full h-40 object-cover" />}

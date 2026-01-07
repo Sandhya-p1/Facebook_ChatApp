@@ -1,7 +1,5 @@
 import { LucideShare, MessageCircle, ThumbsUp } from "lucide-react";
 import React, { useState } from "react";
-import Like from "./like";
-import CommentBox from "./commentBox";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postLikes } from "../api/likesCommentsApi";
 import { useGetComments, usePostComments } from "../hooks/useComment";
@@ -36,15 +34,18 @@ const PostTemplateFooter = ({ postId, totalLikes = 0, isLiked }) => {
     <>
       <div className="flex justify-evenly items-center w-full text-[16px] p-4">
         <div className="flex items-center space-x-1 cursor-pointer hover:scale-105 px-4 py-1  transition-all duration-300 hover:bg-neutral-700 rounded-md ease-out">
-          <ThumbsUp size={20} />
-          <p
-            className={`cursor-pointer hover:text-blue-500 ${
+          <div
+            className={`cursor-pointer hover:text-blue-500 flex  ${
               isLiked ? "text-blue-500" : ""
             }`}
             onClick={() => likeMutation.mutate(postId)}
           >
-            Like:{totalLikes}
-          </p>
+            <span className="mr-2">
+              {" "}
+              <ThumbsUp size={20} />
+            </span>
+            Like: {totalLikes}
+          </div>
         </div>
 
         <div

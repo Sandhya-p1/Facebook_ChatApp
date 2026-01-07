@@ -39,9 +39,9 @@ const PostTemplate = ({ posts: propPosts }) => {
               <div className="flex items-start space-x-2.5">
                 <img src="" className="h-10 w-10 rounded-full" />
                 <div className="flex flex-col gap-0.5">
-                  <p className="text-sm flex items-center">
+                  <p className="text-sm flex items-center uppercase">
                     {post.user?.userName}
-                    <span className="mx-2 text-blue-500">Follow</span>
+                    <span className="mx-2 text-blue-500 lowercase">Follow</span>
                   </p>
                   <h4 className="text-xs flex items-center text-gray-400">
                     1h.
@@ -54,8 +54,19 @@ const PostTemplate = ({ posts: propPosts }) => {
               {/* rightside */}
               <div className="flex space-x-1 items-center">
                 <Ellipsis className="cursor-pointer" />
-                <X className="cursor-pointer" />
-                <Delete onClick={() => handleDeletePost(post._id)} />
+                {/* <X className="cursor-pointer" /> */}
+                <div className="relative group cursor-pointer ">
+                  <Delete onClick={() => handleDeletePost(post._id)} />
+                  <span
+                    className="absolute top-full left-0 px-3 py-2 mt-2 rounded-2xl whitespace-nowrap bg-black
+               opacity-0 scale-90 
+               group-hover:opacity-100 
+               group-hover:scale-100
+               transition-all duration-300"
+                  >
+                    Delete Post
+                  </span>
+                </div>
               </div>
             </nav>
 
