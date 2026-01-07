@@ -1,7 +1,8 @@
 import { create } from "zustand";
 import { io } from "socket.io-client";
 
-const BASE_URL = "http://localhost:8000";
+const BASE_URL =
+  import.meta.env.MODE === "development" ? "http://localhost:8000" : "/";
 
 export const useSocketStore = create((set, get) => ({
   socket: null,

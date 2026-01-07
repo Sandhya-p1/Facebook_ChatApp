@@ -15,7 +15,7 @@ const ProfileHeader = () => {
   const { data: authUser } = useAuthUser();
 
   return (
-    <div className="w-full bg-gradient-to-b from-sky-400  to-neutral-950 pb-10">
+    <div className="w-full bg-gradient  from-sky-400  to-neutral-950 pb-10">
       <div className="w-full relative">
         {/* Cover Image */}
         <div className="w-full h-[220px] md:h-[420px] relative">
