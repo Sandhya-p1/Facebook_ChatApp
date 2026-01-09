@@ -1,4 +1,6 @@
 import dotenv from "dotenv";
+console.log("Dotenv loaded:", process.env);
+
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
