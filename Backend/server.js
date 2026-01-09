@@ -34,9 +34,11 @@ app.use("/api/users", usersRoutes);
 app.use("/api/likesComments", likesCommentsRoutes);
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../Frontend/dist")));
+  const frontendDist = path.join(__dirname, "../Frontend/dist");
 
-  app.get("/*", (req, res) => {
+  app.use(express.static(frontendDist));
+
+  app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "../Frontend", "dist", "index.html"));
   });
 }
