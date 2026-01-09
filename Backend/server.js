@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-console.log("Dotenv loaded:", process.env);
+dotenv.config();
 
 import express from "express";
 import cookieParser from "cookie-parser";
@@ -13,13 +13,27 @@ import usersRoutes from "./routes/allUsersRoutes.js";
 import likesCommentsRoutes from "./routes/likeAndCommentRoutes.js";
 import path from "path";
 
-dotenv.config();
 const PORT = process.env.PORT || 8000;
 const __dirname = path.resolve();
 
+// app.use(
+//   cors({
+//     origin: "http://localhost:5173",
+//     credentials: true,
+//   })
+// );
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://facebook-chatapp-3.onrender.com",
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      callback(new Error("CORS not allowed"));
+    },
     credentials: true,
   })
 );
@@ -38,7 +52,7 @@ if (process.env.NODE_ENV === "production") {
 
   app.use(express.static(frontendDist));
 
-  app.get("*", (req, res) => {
+  app.use((req, res) => {
     res.sendFile(path.join(__dirname, "../Frontend", "dist", "index.html"));
   });
 }
