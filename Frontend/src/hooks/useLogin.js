@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { login } from "../api/authApi";
 import { useNavigate } from "react-router-dom";
 import { useSocketStore } from "../zustandStore/useSocketStore";
+import toast from "react-hot-toast";
 
 export const useLogin = () => {
   const queryClient = useQueryClient();
@@ -11,10 +12,17 @@ export const useLogin = () => {
   return useMutation({
     mutationFn: login,
     onSuccess: (data) => {
-      queryClient.setQueryData(["user"], data);
-      // queryClient.invalidateQueries(["user"]);
-      connecSocket(data._id);
-      navigate("/", { replace: true });
+      try {
+        queryClient.setQueryData(["user"], data);
+
+        connecSocket(data._id);
+        navigate("/", { replace: true });
+      } catch (err) {
+        console.error("Post-login error:", err);
+      }
+    },
+    onError: (error) => {
+      toast.error(error.response?.data?.error || "Login Failed");
     },
   });
 };

@@ -46,7 +46,7 @@ const Login = () => {
         />
         <button
           type="submit"
-          disabled={login.isLoading}
+          disabled={login.isPending}
           className=" border-gray-400 border hover:bg-[#4880e0]  cursor-pointer px-3 py-3 "
         >
           {login.isPending ? "Loading..." : "LogIn "}

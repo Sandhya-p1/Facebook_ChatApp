@@ -17,7 +17,7 @@ function App() {
 
   useEffect(() => {
     if (user?._id) connectSocket(user._id);
-  }, [user]);
+  }, [user?._id]);
 
   if (isLoading) {
     return (
@@ -32,19 +32,19 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={user ? <Feed /> : <Navigate to="/login" replace />}
+          element={user?._id ? <Feed /> : <Navigate to="/login" replace />}
         />
         <Route
           path="/signup"
-          element={!user ? <SignUp /> : <Navigate to="/" />}
+          element={!user?._id ? <SignUp /> : <Navigate to="/" />}
         />
         <Route
           path="/login"
-          element={!user ? <Login /> : <Navigate to="/" />}
+          element={!user?._id ? <Login /> : <Navigate to="/" />}
         />
         <Route
           path="/profile/:id"
-          element={user ? <Profile /> : <Navigate to="/login" replace />}
+          element={user?._id ? <Profile /> : <Navigate to="/login" replace />}
         />
       </Routes>
     </div>
