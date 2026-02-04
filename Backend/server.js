@@ -15,6 +15,8 @@ import likesCommentsRoutes from "./routes/likeAndCommentRoutes.js";
 
 const PORT = process.env.PORT || 8000;
 // const __dirname = path.resolve();
+app.use(cookieParser());
+app.use(express.json());
 
 const allowedOrigins = [
   "http://localhost:5173",
@@ -27,13 +29,11 @@ app.use(
     origin: (origin, callback) => {
       if (!origin) return callback(null, true);
       if (allowedOrigins.includes(origin)) return callback(null, true);
-      callback(new Error("CORS not allowed"));
+      return callback(null, false);
     },
     credentials: true,
   })
 );
-app.use(express.json());
-app.use(cookieParser());
 
 // routes
 app.use("/api/auth", authRoutes);
