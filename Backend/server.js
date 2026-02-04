@@ -16,16 +16,10 @@ import likesCommentsRoutes from "./routes/likeAndCommentRoutes.js";
 const PORT = process.env.PORT || 8000;
 // const __dirname = path.resolve();
 
-// app.use(
-//   cors({
-//     origin: "http://localhost:5173",
-//     credentials: true,
-//   })
-// );
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://facebook-chat-app.vercel.app",
-  "https://facebook-chat-m3883jovb-sandhya-pandeys-projects.vercel.app",
+  "https://facebook-chat-app-yjso.vercel.app",
+  "https://facebook-chat-app-yjso-od0iu7vx3-sandhya-pandeys-projects.vercel.app",
 ];
 
 app.use(
