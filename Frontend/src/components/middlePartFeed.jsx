@@ -34,7 +34,7 @@ const FeedMiddleSection = ({ showCreatePost, setShowCreatePost }) => {
         >
           <div className="flex items-center gap-3">
             <img
-              src=""
+              src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"
               className="w-10 h-10 rounded-full bg-blue-950 shrink-0"
             />
 

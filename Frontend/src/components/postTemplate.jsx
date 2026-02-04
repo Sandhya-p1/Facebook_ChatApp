@@ -37,7 +37,10 @@ const PostTemplate = ({ posts: propPosts }) => {
           >
             <nav className="flex p-2 justify-between items-center">
               <div className="flex items-start space-x-2.5">
-                <img src="" className="h-10 w-10 rounded-full" />
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"
+                  className="h-10 w-10 rounded-full"
+                />
                 <div className="flex flex-col gap-0.5">
                   <p className="text-sm flex items-center uppercase">
                     {post.user?.userName}
