@@ -24,7 +24,7 @@ const PORT = process.env.PORT || 8000;
 // );
 const allowedOrigins = [
   "http://localhost:5173",
-  // "https://facebook-chatapp-3.onrender.com",
+  "https://facebook-chat-app.vercel.app",
 ];
 
 app.use(
