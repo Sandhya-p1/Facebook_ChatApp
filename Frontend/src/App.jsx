@@ -26,6 +26,8 @@ function App() {
       </div>
     );
   }
+  console.log("AUTH USER:", user);
+  console.log("IS LOADING:", isLoading);
 
   return (
     <div>

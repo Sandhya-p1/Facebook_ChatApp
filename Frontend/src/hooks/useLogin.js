@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 export const useLogin = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { connecSocket } = useSocketStore();
+  const { connectSocket } = useSocketStore();
 
   return useMutation({
     mutationFn: login,
@@ -15,8 +15,8 @@ export const useLogin = () => {
       try {
         queryClient.setQueryData(["user"], data);
 
-        connecSocket(data._id);
-        navigate("/", { replace: true });
+        connectSocket(data._id);
+        // navigate("/", { replace: true });
       } catch (err) {
         console.error("Post-login error:", err);
       }

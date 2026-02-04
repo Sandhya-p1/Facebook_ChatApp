@@ -1,9 +1,16 @@
 import axios from "axios";
 
+// export const axiosInstance = axios.create({
+//   baseURL: import.meta.env.VITE_API_URL,
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+//   withCredentials: true,
+// });
 export const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
+  baseURL:
+    import.meta.env.MODE === "development"
+      ? "http://localhost:8000/api"
+      : "https://facebook-chatapp-2.onrender.com/api",
   withCredentials: true,
 });
