@@ -11,10 +11,10 @@ import messageRoutes from "./routes/messageRoutes.js";
 import postRoutes from "./routes/postRoutes.js";
 import usersRoutes from "./routes/allUsersRoutes.js";
 import likesCommentsRoutes from "./routes/likeAndCommentRoutes.js";
-import path from "path";
+// import path from "path";
 
 const PORT = process.env.PORT || 8000;
-const __dirname = path.resolve();
+// const __dirname = path.resolve();
 
 // app.use(
 //   cors({
@@ -24,7 +24,7 @@ const __dirname = path.resolve();
 // );
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://facebook-chatapp-3.onrender.com",
+  // "https://facebook-chatapp-3.onrender.com",
 ];
 
 app.use(
@@ -47,15 +47,15 @@ app.use("/api/posts", postRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/likesComments", likesCommentsRoutes);
 
-if (process.env.NODE_ENV === "production") {
-  const frontendDist = path.join(__dirname, "../Frontend/dist");
+// if (process.env.NODE_ENV === "production") {
+//   const frontendDist = path.join(__dirname, "../Frontend/dist");
 
-  app.use(express.static(frontendDist));
+//   app.use(express.static(frontendDist));
 
-  app.use((req, res) => {
-    res.sendFile(path.join(__dirname, "../Frontend", "dist", "index.html"));
-  });
-}
+//   app.use((req, res) => {
+//     res.sendFile(path.join(__dirname, "../Frontend", "dist", "index.html"));
+//   });
+// }
 
 server.listen(PORT, () => {
   connectToMongoDB();
